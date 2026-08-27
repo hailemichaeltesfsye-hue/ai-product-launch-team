@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Literal
 from pydantic import BaseModel, Field
 
@@ -8,7 +9,7 @@ class SubTask(BaseModel):
     id: str = Field(
         description="Unique identifier for the subtask, e.g. 'task_research', 'task_content', 'task_financial'"
     )
-    agent_type: Literal["research", "content", "financial"] = Field(
+    agent_type: Literal["research", "content", "financial", "cost", "pricing"] = Field(
         description="The specialist agent responsible for this subtask"
     )
     title: str = Field(
@@ -122,3 +123,137 @@ class ConsolidatedReport(BaseModel):
         default_factory=list,
         description="Prioritized, concrete next steps for execution"
     )
+
+
+# ---------------------------------------------------------------------------
+# Hierarchical multi-agent architecture schemas
+# (CEO -> Marketing/Finance Managers -> specialist agents)
+# ---------------------------------------------------------------------------
+
+
+class CostAssessment(BaseModel):
+    """Cost-focused financial analysis produced by CostAgent."""
+
+    estimated_setup_cost: str = Field(
+        description="Initial capital expenditure or development setup cost estimate"
+    )
+    recurring_costs: List[str] = Field(
+        default_factory=list,
+        description="Breakdown of estimated ongoing operating expenses"
+    )
+    break_even_timeline: str = Field(
+        description="Estimated timeline and milestones to reach break-even / profitability"
+    )
+    cost_risks: List[str] = Field(
+        default_factory=list,
+        description="Potential cost overruns, drivers, or sensitivities"
+    )
+
+
+class PricingStrategy(BaseModel):
+    """Revenue and pricing strategy produced by PricingAgent."""
+
+    pricing_model: str = Field(
+        description="Overall pricing model/approach (e.g. tiered SaaS, usage-based, one-time purchase)"
+    )
+    pricing_tiers: List[str] = Field(
+        default_factory=list,
+        description="Specific pricing tiers or packages with price points"
+    )
+    revenue_streams: List[str] = Field(
+        default_factory=list,
+        description="Monetization models and revenue sources"
+    )
+    pricing_risks: List[str] = Field(
+        default_factory=list,
+        description="Risks related to pricing sensitivity, competition, or willingness-to-pay"
+    )
+
+
+class MarketingReport(BaseModel):
+    """Marketing Manager's synthesis of ResearchAgent + ContentAgent outputs."""
+
+    summary: str = Field(
+        description="Executive summary of the overall marketing strategy and market position"
+    )
+    market_positioning: str = Field(
+        description="Synthesized positioning statement blending research findings and messaging strategy"
+    )
+    key_research_insights: List[str] = Field(
+        default_factory=list,
+        description="Most important research findings that inform the marketing strategy"
+    )
+    messaging_summary: str = Field(
+        description="Condensed summary of the core messaging and content strategy"
+    )
+    recommended_channels: List[str] = Field(
+        default_factory=list,
+        description="Recommended distribution/marketing channels"
+    )
+
+
+class FinanceReport(BaseModel):
+    """Finance Manager's synthesis of CostAgent + PricingAgent outputs."""
+
+    summary: str = Field(
+        description="Executive summary of the overall financial strategy and outlook"
+    )
+    cost_overview: str = Field(
+        description="Condensed summary of setup/recurring costs and break-even outlook"
+    )
+    pricing_overview: str = Field(
+        description="Condensed summary of the pricing strategy and revenue streams"
+    )
+    financial_risks: List[str] = Field(
+        default_factory=list,
+        description="Combined financial risks from both cost and pricing analysis"
+    )
+
+
+class ExecutiveReport(BaseModel):
+    """CEO's final synthesis of MarketingReport + FinanceReport into an executive report."""
+
+    executive_summary: str = Field(
+        description="High-level synthesized summary of the entire strategic initiative"
+    )
+    strategic_analysis: str = Field(
+        description="Synthesized strategic perspective blending marketing and finance"
+    )
+    marketing_highlights: str = Field(
+        description="Synthesis of the Marketing Manager's report"
+    )
+    finance_highlights: str = Field(
+        description="Synthesis of the Finance Manager's report"
+    )
+    action_items: List[str] = Field(
+        default_factory=list,
+        description="Prioritized, concrete next steps for execution"
+    )
+
+
+class AgentHandoff(BaseModel):
+    """Structured audit record for an explicit transfer of work."""
+
+    from_agent: str
+    to_agent: str
+    reason: str
+    timestamp: datetime
+
+
+class AgentMessage(BaseModel):
+    """A visible message exchanged directly between peer agents."""
+
+    sender: Literal["research", "finance", "content"]
+    recipient: Literal["research", "finance", "content"]
+    message_type: Literal["request", "response", "handoff", "insight"]
+    content: str
+
+
+class LaunchSynthesis(BaseModel):
+    """Final launch readout produced from the three peer deliverables."""
+
+    executive_summary: str
+    market_thesis: str
+    messaging_direction: str
+    financial_direction: str
+    action_items: List[str] = Field(default_factory=list)

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Product Launch Team</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">✦</span><div><strong>AI Product Launch Team</strong><small>Decentralized Peer-to-Peer Agent Network</small></div></div>
+      <div class="status"><span class="pulse"></span><span id="status">Team idle</span></div>
+    </header>
+
+    <section class="workspace">
+      <aside class="brief panel">
+        <div class="eyebrow">LAUNCH CAMPAIGN</div>
+        <h1>Give the peers a brief.</h1>
+        <p class="hint">Research, finance, and content coordinate directly through a shared mailbox.</p>
+        <textarea id="request">Launch an AI-powered personal assistant that can assist people with everyday corporate duties.</textarea>
+        <button id="run"><span>Deploy Launch Team</span><span class="arrow">→</span></button>
+        <div class="feed-head"><span>LIVE P2P AGENT MESSAGES</span><button id="clear">Clear</button></div>
+        <div id="feed" class="feed"><div class="empty">Your collaboration trace will appear here.</div></div>
+      </aside>
+
+      <section class="main-column">
+        <div class="panel map-panel">
+          <div class="panel-title"><div><div class="eyebrow">NETWORK TOPOLOGY</div><h2>Live Team Collaboration Flow</h2></div><div class="topology-tools"><span class="network-label">8 NODES / SHARED STATE</span><button class="zoom-control" id="zoom-out" title="Zoom out">−</button><button class="zoom-control" id="zoom-reset" title="Reset zoom">100%</button><button class="zoom-control" id="zoom-in" title="Zoom in">+</button></div></div>
+          <div class="network hierarchical-network">
+            <svg class="routes" viewBox="0 0 900 430" preserveAspectRatio="none" aria-hidden="true">
+              <path id="route-ceo-mkt" d="M450 73 C450 96 290 83 290 112"></path><path id="route-ceo-fin" d="M450 73 C450 96 610 83 610 112"></path>
+              <path id="route-mkt-res" d="M290 163 L290 199"></path><path id="route-fin-cost" d="M610 163 L610 199"></path>
+              <path id="route-res-content" d="M290 250 L290 286"></path><path id="route-cost-pricing" d="M610 250 L610 286"></path>
+              <path id="route-content-ceo" d="M290 337 C290 390 450 385 450 365"></path><path id="route-pricing-ceo" d="M610 337 C610 390 450 385 450 365"></path>
+              <circle class="packet" r="6"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#route-ceo-mkt"></mpath></animateMotion></circle>
+              <circle class="packet" r="6"><animateMotion dur="2s" begin=".6s" repeatCount="indefinite"><mpath href="#route-ceo-fin"></mpath></animateMotion></circle>
+              <circle class="packet" r="6"><animateMotion dur="1.5s" begin=".2s" repeatCount="indefinite"><mpath href="#route-mkt-res"></mpath></animateMotion></circle>
+              <circle class="packet" r="6"><animateMotion dur="1.5s" begin=".8s" repeatCount="indefinite"><mpath href="#route-fin-cost"></mpath></animateMotion></circle>
+              <circle class="packet" r="6"><animateMotion dur="1.5s" begin=".4s" repeatCount="indefinite"><mpath href="#route-res-content"></mpath></animateMotion></circle>
+              <circle class="packet" r="6"><animateMotion dur="1.5s" begin="1s" repeatCount="indefinite"><mpath href="#route-cost-pricing"></mpath></animateMotion></circle>
+              <circle class="packet" r="6"><animateMotion dur="2.4s" begin=".5s" repeatCount="indefinite"><mpath href="#route-content-ceo"></mpath></animateMotion></circle>
+              <circle class="packet" r="6"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite"><mpath href="#route-pricing-ceo"></mpath></animateMotion></circle>
+            </svg>
+            <article class="agent ceo" data-agent="decompose"><span class="agent-tag">CEO AGENT</span><h3>CEO Agent</h3><p>Task decomposition</p><span class="agent-state">READY</span></article>
+            <article class="agent marketing" data-agent="marketing"><span class="agent-tag">MANAGER</span><h3>Marketing Manager</h3><p>Go-to-market strategy</p><span class="agent-state">READY</span></article>
+            <article class="agent finance" data-agent="finance"><span class="agent-tag">MANAGER</span><h3>Finance Manager</h3><p>Financial planning</p><span class="agent-state">READY</span></article>
+            <article class="agent research" data-agent="research"><span class="agent-tag">SPECIALIST</span><h3>Research Agent</h3><p>Market intelligence</p><span class="agent-state">READY</span></article>
+            <article class="agent cost" data-agent="cost"><span class="agent-tag">SPECIALIST</span><h3>Cost Agent</h3><p>Budget analysis</p><span class="agent-state">READY</span></article>
+            <article class="agent content" data-agent="content"><span class="agent-tag">SPECIALIST</span><h3>Content Agent</h3><p>Copywriting</p><span class="agent-state">READY</span></article>
+            <article class="agent pricing" data-agent="pricing"><span class="agent-tag">SPECIALIST</span><h3>Pricing Agent</h3><p>Monetization</p><span class="agent-state">READY</span></article>
+            <article class="agent synthesizer" data-agent="aggregate"><span class="agent-tag">CEO SYNTHESIZER</span><h3>CEO Agent</h3><p>Plan synthesizer</p><span class="agent-state">READY</span></article>
+          </div>
+          <div class="legend"><span><i class="dot cyan"></i>Peer active</span><span><i class="dot line"></i>Direct message route</span><span><i class="dot green"></i>Deliverable complete</span></div>
+        </div>
+
+        <div class="panel report-panel" id="report"><nav class="report-tabs"><button class="tab active" data-tab="launch">▣ Launch Plan</button><button class="tab" data-tab="marketing">⌁ Marketing Report</button><button class="tab" data-tab="finance">◉ Financial Plan</button></nav><div id="report-body"><div class="eyebrow">LAUNCH PLAN</div><h2>Decision-ready output will land here.</h2><p class="hint">Deploy the team to populate each report from its responsible agents.</p></div></div>
+      </section>
+    </section>
+  </main>
+  <script>
+    const request = document.querySelector('#request'), run = document.querySelector('#run'), feed = document.querySelector('#feed'), status = document.querySelector('#status'), reportBody = document.querySelector('#report-body'), network = document.querySelector('.network');
+    const labels = { decompose: 'CEO Agent', marketing: 'Marketing Manager', finance: 'Finance Manager', research: 'Research Agent', cost: 'Cost Agent', content: 'Content Agent', pricing: 'Pricing Agent', aggregate: 'CEO Synthesizer' };
+    const state = {};
+    const descriptions = { decompose: 'Broke the launch brief into manager directives.', marketing: 'Delegated the marketing work to Research and Content.', finance: 'Delegated financial work to Cost and Pricing.', research: 'Completed market research and handed it to Content.', cost: 'Completed cost analysis for Finance Manager.', content: 'Created content using the research handoff.', pricing: 'Completed pricing strategy for Finance Manager.', aggregate: 'Synthesized the manager reports into the launch plan.' };
+    function terminalNode(path) { return path.split('.').pop(); }
+    function addMessage(path, payload) { const node = terminalNode(path), el = document.querySelector(`[data-agent="${node}"]`); if (el) { el.classList.add('working'); el.querySelector('.agent-state').textContent = 'WORKING'; setTimeout(() => { el.classList.remove('working'); el.classList.add('complete'); el.querySelector('.agent-state').textContent = 'DONE'; }, 1100); } network.classList.add(`route-${node}`); const message = document.createElement('div'); message.className = 'message'; message.innerHTML = `<span class="message-dot"></span><div><strong>${labels[node] || node}</strong><small>${descriptions[node] || 'Updated shared workflow state.'}</small></div>`; feed.prepend(message); Object.assign(state, payload || {}); }
+    function reportMarkup(tab) { const final = state.final_response || {}, marketing = state.marketing_report || {}, finance = state.finance_report || {}, research = state.research_output || {}, content = state.content_output || {}, cost = state.cost_output || {}, pricing = state.pricing_output || {}; if (tab === 'marketing') return `<div class="eyebrow">MARKETING REPORT</div><h2>Marketing Manager Synthesis</h2><p>${marketing.summary || 'Marketing report will appear when the team completes.'}</p><div class="report-grid"><div><label>POSITIONING</label><p>${marketing.market_positioning || 'Pending'}</p></div><div><label>MESSAGING</label><p>${marketing.messaging_summary || content.core_messaging || 'Pending'}</p></div><div><label>RESEARCH INSIGHTS</label><ul>${(marketing.key_research_insights || research.key_findings || []).map(x => `<li>${x}</li>`).join('')}</ul></div><div><label>RECOMMENDED CHANNELS</label><ul>${(marketing.recommended_channels || content.target_channels || []).map(x => `<li>${x}</li>`).join('')}</ul></div></div>`; if (tab === 'finance') return `<div class="eyebrow">FINANCIAL PLAN</div><h2>Finance Manager Synthesis</h2><p>${finance.summary || 'Financial report will appear when the team completes.'}</p><div class="report-grid"><div><label>COST OVERVIEW</label><p>${finance.cost_overview || cost.estimated_setup_cost || 'Pending'}</p></div><div><label>PRICING OVERVIEW</label><p>${finance.pricing_overview || pricing.pricing_model || 'Pending'}</p></div><div><label>ESTIMATED ROI / BREAK-EVEN</label><p>${cost.break_even_timeline || 'Pending'}</p></div><div><label>PRICING TIERS</label><ul>${(pricing.pricing_tiers || []).map(x => `<li>${x}</li>`).join('')}</ul></div></div>`; return `<div class="eyebrow">LAUNCH PLAN</div><h2>${final.executive_summary || 'Decision-ready output will land here.'}</h2><p>${final.strategic_analysis || 'Deploy the team to populate the launch plan.'}</p><div class="report-grid"><div><label>MARKETING HIGHLIGHTS</label><p>${final.marketing_highlights || marketing.summary || 'Pending'}</p></div><div><label>FINANCE HIGHLIGHTS</label><p>${final.finance_highlights || finance.summary || 'Pending'}</p></div><div><label>RESEARCH THESIS</label><p>${research.summary || 'Pending'}</p></div><div><label>NEXT MOVES</label><ul>${(final.action_items || []).map(x => `<li>${x}</li>`).join('')}</ul></div></div>`; }
+    document.querySelectorAll('.tab').forEach(tab => tab.onclick = () => { document.querySelectorAll('.tab').forEach(x => x.classList.remove('active')); tab.classList.add('active'); reportBody.innerHTML = reportMarkup(tab.dataset.tab); });
+    let zoom = 1; const setZoom = value => { zoom = Math.max(.75, Math.min(1.25, value)); network.style.setProperty('--diagram-zoom', zoom); document.querySelector('#zoom-reset').textContent = `${Math.round(zoom * 100)}%`; }; document.querySelector('#zoom-out').onclick = () => setZoom(zoom - .1); document.querySelector('#zoom-in').onclick = () => setZoom(zoom + .1); document.querySelector('#zoom-reset').onclick = () => setZoom(1);
+    run.onclick = () => { feed.innerHTML = ''; Object.keys(state).forEach(k => delete state[k]); status.textContent = 'Team executing...'; run.disabled = true; network.classList.add('running'); document.querySelectorAll('.agent').forEach(e => { e.classList.remove('complete', 'working'); e.querySelector('.agent-state').textContent = 'READY'; }); const source = new EventSource(`/api/run?request=${encodeURIComponent(request.value)}`); source.onmessage = event => { const data = JSON.parse(event.data); if (data.node === 'complete') { source.close(); status.textContent = 'Team complete'; network.classList.remove('running'); reportBody.innerHTML = reportMarkup(document.querySelector('.tab.active').dataset.tab); run.disabled = false; } else addMessage(data.node, data.state); }; source.onerror = () => { source.close(); status.textContent = 'Connection error'; network.classList.remove('running'); run.disabled = false; }; };
+    document.querySelector('#clear').onclick = () => feed.innerHTML = '<div class="empty">Your collaboration trace will appear here.</div>';
+  </script>
+</body>
+</html>

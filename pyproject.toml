@@ -10,6 +10,9 @@ dependencies = [
     "pydantic-ai[groq]>=2.33.0",
     "pydantic-settings>=2.15.0",
     "python-dotenv>=1.2.3",
+    "fastapi>=0.115.0",
+    "streamlit>=1.45.0",
+    "uvicorn>=0.34.0",
 ]
 
 [dependency-groups]
