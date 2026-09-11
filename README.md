@@ -1,10 +1,15 @@
 # AI Product Launch Team
 
-A hierarchical multi-agent simulation of a corporate product launch workflow, built with **LangGraph** and **Pydantic**. A CEO/Supervisor layer orchestrates a team of specialized agents covering marketing, finance, pricing, and research, with a live dashboard visualizing the agent hierarchy and task flow in real time.
+An autonomous multi-agent simulation of a corporate product launch workflow, built with **LangGraph** and **Pydantic**. The project implements two agent-coordination architectures side by side — a **peer-to-peer (P2P)** agent network and a **hierarchical supervisor** system — plus a live dashboard that visualizes the agent hierarchy and task flow in real time.
 
 ## Overview
 
-This project models how a company's leadership and functional teams collaborate to plan and execute a product launch. Instead of a single monolithic agent, tasks are delegated across a hierarchy of specialized agents:
+The system models how a company's leadership and functional teams collaborate to plan and execute a product launch. Two coordination styles are implemented:
+
+- **Peer-to-peer (P2P)** — agents hand off tasks directly to one another via `graphs/p2p_graph.py` and `state/p2p_state.py`
+- **Hierarchical / Supervisor** — a top-down structure where a supervisor routes work down through manager agents to specialists, visualized live on the dashboard
+
+### Agents (`agents/`)
 
 - **Supervisor** (`supervisor.py`) — receives the high-level goal, breaks it into subtasks, and routes them to the right specialist agent
 - **CEO** (`ceo.py`) — top-level decision-making and final sign-off on strategy
@@ -17,11 +22,11 @@ This project models how a company's leadership and functional teams collaborate 
 - **Research** (`research.py`) — market/competitive research to inform decisions
 - **Model** (`model.py`) — shared LLM/model configuration used across agents
 
-A live dashboard (`dashboard.py` / `index.html`) renders this hierarchy and shows each agent's status as the workflow runs.
+A live dashboard (`dashboard.py` / `index.html`) renders the hierarchy and shows each agent's status as the workflow runs. An architecture diagram is available at `docs/architecture.svg`.
 
 ## Stack
 
-- **Python** (LangGraph + Pydantic for the multi-agent supervisor system)
+- **Python** (LangGraph + Pydantic for agent orchestration and structured state)
 - **HTML/CSS** — live dashboard front end
 - **uv** — Python package and environment management (`pyproject.toml`, `uv.lock`)
 
@@ -41,12 +46,32 @@ ai-product-launch-team/
 │   ├── pricing.py             # Pricing strategy agent
 │   ├── research.py            # Market research agent
 │   └── model.py               # Shared LLM/model config
-├── config/           # Configuration for models, routing, and agent settings
-├── docs/             # Project documentation
-├── graphs/           # LangGraph graph definitions (state machine / workflow)
-├── state/            # Shared state schema passed between agents
-├── tests/            # Test suite
-├── tools/            # Tools/functions available to agents
+├── config/
+│   ├── settings.py            # App/environment settings
+│   └── logging_config.py      # Logging setup
+├── docs/
+│   └── architecture.svg       # System architecture diagram
+├── graphs/
+│   ├── supervisor_graph.py    # Top-level supervisor LangGraph
+│   ├── ceo_graph.py           # CEO decision subgraph
+│   ├── marketing_subgraph.py  # Marketing team subgraph
+│   ├── finance_subgraph.py    # Finance team subgraph
+│   └── p2p_graph.py           # Peer-to-peer agent network graph
+├── state/
+│   ├── state.py                # Core shared state schema
+│   ├── schemas.py              # Pydantic models for agent I/O
+│   ├── handoffs.py             # Agent-to-agent handoff logic
+│   └── p2p_state.py            # State schema for the P2P graph
+├── tools/
+│   └── research.py             # Research tool used by agents
+├── tests/
+│   ├── test_agents.py
+│   ├── test_graph.py
+│   ├── test_schemas.py
+│   ├── test_tools.py
+│   ├── test_hierarchical_agents.py
+│   ├── test_hierarchical_graph.py
+│   └── test_hierarchical_schemas.py
 ├── app.py            # Application entry point
 ├── main.py           # Core orchestration logic
 ├── dashboard.py      # Live dashboard backend
@@ -109,9 +134,10 @@ uv run pytest
 1. A launch goal is submitted to the **Supervisor** agent.
 2. The supervisor decomposes the goal and routes subtasks to the **CEO**, **Marketing Manager**, or **Finance Manager**, depending on the type of decision needed.
 3. Manager agents delegate further: Marketing Manager to **Content**; Finance Manager to **Finance**, **Financial**, **Cost**, and **Pricing**. The **Research** agent can be called on to inform any of these decisions.
-4. Each agent processes its task via a shared **Model** configuration and returns results/state updates through the LangGraph state graph.
-5. The supervisor aggregates results, resolves dependencies, and determines the next step — looping until the launch plan is complete.
-6. The dashboard subscribes to state updates and renders live progress across the hierarchy.
+4. Handoffs between agents are tracked via `state/handoffs.py`, with shared state validated against Pydantic schemas in `state/schemas.py`.
+5. Each agent processes its task via a shared **Model** configuration and returns results/state updates through the LangGraph state graph.
+6. The supervisor aggregates results, resolves dependencies, and determines the next step — looping until the launch plan is complete.
+7. The dashboard subscribes to state updates and renders live progress across the hierarchy.
 
 ## Author
 
